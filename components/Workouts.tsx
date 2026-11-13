@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Plus,
   Search,
@@ -10,6 +10,8 @@ import {
   CalendarDays,
   Dumbbell,
   ArrowUpRight,
+  Film,
+  RefreshCw,
 } from "lucide-react";
 import {
   sortedWorkouts,
@@ -19,12 +21,23 @@ import {
   GROUPS,
   exerciseSchema,
   uid,
+  mergeBuiltinExercises,
 } from "@/lib/model";
+import { EXERCISE_CATALOG, guideById } from "@/lib/exercise-catalog";
+import { ExercisePreview, ExerciseDemoModal } from "./ExerciseDemo";
 import { useGym } from "./context";
 import { Card, Empty, Modal, Field, ErrorText, SectionHead } from "./ui";
 export default function Workouts() {
   const { data, openWorkout, remove, commit, navigate } = useGym();
-  const [tab, setTab] = useState("history");
+  const [tab, setTab] = useState(location.hash === "#exercises" ? "exercises" : "history");
+  useEffect(() => {
+    const update = () => {
+      if (location.hash === "#exercises") setTab("exercises");
+      if (location.hash === "#workout") setTab("history");
+    };
+    window.addEventListener("hashchange", update);
+    return () => window.removeEventListener("hashchange", update);
+  }, []);
   const [search, setSearch] = useState("");
   const [month, setMonth] = useState("");
   const workouts = sortedWorkouts(data).filter(
@@ -57,13 +70,13 @@ export default function Workouts() {
       <div className="page-tabs">
         <button
           className={tab === "history" ? "active" : ""}
-          onClick={() => setTab("history")}
+          onClick={() => { setTab("history"); location.hash = "workout"; }}
         >
           训练历史 <span>{data.workouts.length}</span>
         </button>
         <button
           className={tab === "exercises" ? "active" : ""}
-          onClick={() => setTab("exercises")}
+          onClick={() => { setTab("exercises"); location.hash = "exercises"; }}
         >
           动作库 <span>{data.exercises.length}</span>
         </button>
@@ -231,6 +244,8 @@ export default function Workouts() {
 function ExerciseLibrary() {
   const { data, commit, remove, saving, navigate } = useGym();
   const [group, setGroup] = useState("全部");
+  const [equipment, setEquipment] = useState("全部器械");
+  const [demo, setDemo] = useState<Exercise | null>(null);
   const [search, setSearch] = useState("");
   const [edit, setEdit] = useState<Exercise | null>(null);
   const [error, setError] = useState("");
@@ -293,82 +308,39 @@ function ExerciseLibrary() {
       ),
     );
   }
+  const filtered = data.exercises.filter(ex => {
+    const guide = guideById(ex.demoId);
+    const query = search.trim().toLowerCase();
+    return (group === "全部" || ex.group === group)
+      && (equipment === "全部器械" || guide?.equipment === equipment)
+      && (!query || [ex.name, guide?.englishName, guide?.equipment, guide?.target].join(" ").toLowerCase().includes(query));
+  });
+  const missing = EXERCISE_CATALOG.some(g => !data.exercises.some(e => e.id === g.id || (e.name === g.name && e.group === g.group)));
   return (
     <>
-      <div className="filter-bar">
-        <label className="search-input">
-          <Search size={16} />
-          <input
-            aria-label="搜索动作库"
-            placeholder="搜索训练动作"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </label>
-        <select
-          aria-label="筛选肌群"
-          value={group}
-          onChange={(e) => setGroup(e.target.value)}
-        >
-          {["全部", ...GROUPS].map((g) => (
-            <option key={g}>{g}</option>
-          ))}
-        </select>
-        <button className="button primary" onClick={() => open()}>
-          <Plus size={16} />
-          添加动作
-        </button>
+      <div className="library-intro"><div><strong>动作指南 <span>{data.exercises.length}</span></strong><p>按肌群和器械查找动作，点开图示查看分解 GIF 与动作要点。</p></div><span className="tag"><Film size={13}/>100 项内置示范</span></div>
+      <div className="filter-bar library-filters">
+        <label className="search-input"><Search size={16}/><input aria-label="搜索动作库" placeholder="搜索中文、英文、器械或肌群" value={search} onChange={e => setSearch(e.target.value)}/></label>
+        <select aria-label="筛选肌群" value={group} onChange={e => setGroup(e.target.value)}>{["全部", ...GROUPS].map(g => <option key={g}>{g}</option>)}</select>
+        <select aria-label="筛选器械" value={equipment} onChange={e => setEquipment(e.target.value)}>{["全部器械", ...new Set(EXERCISE_CATALOG.map(g => g.equipment))].map(e => <option key={e}>{e}</option>)}</select>
+        <button className="button primary" onClick={() => open()}><Plus size={16}/>添加动作</button>
       </div>
-      <ErrorText message={error} />
+      <div className="library-result"><span>找到 {filtered.length} 个动作</span>{(search || group !== "全部" || equipment !== "全部器械") && <button className="text-link" onClick={() => { setSearch(""); setGroup("全部"); setEquipment("全部器械"); }}>重置筛选</button>}{missing && <button className="text-link" disabled={saving || data.exercises.length >= 500} onClick={() => commit(mergeBuiltinExercises(data), "已补充缺少的内置动作，历史记录已保留")}><RefreshCw size={13}/>补充内置动作</button>}</div>
+      <ErrorText message={error}/>
       <div className="exercise-library">
-        {data.exercises
-          .filter(
-            (e) =>
-              (group === "全部" || e.group === group) &&
-              e.name.includes(search),
-          )
-          .map((ex) => (
-            <Card key={ex.id}>
-              <div className="exercise-library-icon">
-                <Dumbbell size={24} />
-              </div>
-              <span className="tag">{ex.group}</span>
-              <h3>{ex.name}</h3>
-              <div className="exercise-library-actions">
-                <button
-                  className="text-link"
-                  onClick={() => navigate("analytics", ex.id)}
-                >
-                  查看分析
-                  <ArrowUpRight size={14} />
-                </button>
-                <button
-                  aria-label={`编辑${ex.name}`}
-                  className="icon-button"
-                  onClick={() => open(ex)}
-                >
-                  <Pencil size={15} />
-                </button>
-                <button
-                  aria-label={`删除${ex.name}`}
-                  className="icon-button"
-                  onClick={() => deleteExercise(ex)}
-                >
-                  <Trash2 size={15} />
-                </button>
-              </div>
-            </Card>
-          ))}
+        {filtered.map(ex => {
+          const guide = guideById(ex.demoId);
+          return <Card key={ex.id} className="exercise-library-card">
+            <ExercisePreview exercise={ex} onOpen={() => guide ? setDemo(ex) : open(ex)}/>
+            <div className="library-card-content"><div className="library-card-meta"><span className="tag">{ex.group}</span><span>{guide?.equipment || "自定义"}</span></div>
+              <h3>{ex.name}</h3><p className="library-english">{guide?.englishName || "选择对应示范，完善你的动作指南"}</p>
+              <div className="exercise-library-actions"><button className="text-link" onClick={() => navigate("analytics", ex.id)}>查看分析<ArrowUpRight size={14}/></button><button aria-label={`编辑${ex.name}`} className="icon-button" onClick={() => open(ex)}><Pencil size={15}/></button><button aria-label={`删除${ex.name}`} className="icon-button" onClick={() => deleteExercise(ex)}><Trash2 size={15}/></button></div>
+            </div>
+          </Card>;
+        })}
       </div>
-      {!data.exercises.some(
-        (e) =>
-          (group === "全部" || e.group === group) && e.name.includes(search),
-      ) && (
-        <Empty
-          title="没有匹配的动作"
-          text="调整肌群或搜索词，也可以添加自己的动作。"
-        />
-      )}
+      {!filtered.length && <Empty title="没有匹配的动作" text="调整肌群、器械或搜索词，也可以添加自己的动作。"/>}
+      {demo && <ExerciseDemoModal exercise={demo} onClose={() => setDemo(null)}/>}
       {edit && (
         <Modal
           title={
@@ -401,6 +373,15 @@ function ExerciseLibrary() {
                   {GROUPS.map((g) => (
                     <option key={g}>{g}</option>
                   ))}
+                </select>
+              </Field>
+              <Field label="关联动作示范" hint="选择与实际动作一致的示范；自定义动作可以暂不关联。">
+                <select value={edit.demoId || ""} onChange={e => {
+                  const guide = guideById(e.target.value);
+                  setEdit({ ...edit, demoId: e.target.value, ...(!edit.name.trim() && guide ? { name: guide.name, group: guide.group } : {}) });
+                }}>
+                  <option value="">暂不关联示范</option>
+                  {EXERCISE_CATALOG.map(g => <option key={g.id} value={g.id}>{g.name} · {g.equipment}</option>)}
                 </select>
               </Field>
               <ErrorText message={error} />

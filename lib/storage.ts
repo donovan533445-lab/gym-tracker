@@ -1,4 +1,4 @@
-import { type State, stateSchema, initialState } from "./model.ts";
+import { type State, stateSchema, initialState, upgradeCatalog } from "./model.ts";
 
 export interface TrainingRepository {
   load(): Promise<{ data: State; revision: number }>;
@@ -29,7 +29,7 @@ export class DataRepository implements TrainingRepository {
   async load(): Promise<Stored> {
     const db = await this.open();
     return new Promise((resolve, reject) => {
-      const tx = db.transaction("state", "readonly");
+      const tx = db.transaction("state", "readwrite");
       const request = tx.objectStore("state").get("current");
       let result: Stored;
       let error: unknown;
@@ -38,6 +38,11 @@ export class DataRepository implements TrainingRepository {
           const stored = request.result as Stored | undefined;
           result = stored ? { data: stateSchema.parse(stored.data), revision: stored.revision } : { data: initialState(), revision: 0 };
           if (!Number.isSafeInteger(result.revision) || result.revision < 0) throw new Error("数据版本无效");
+          const upgraded = upgradeCatalog(result.data);
+          if (upgraded !== result.data) {
+            result = { data: stateSchema.parse(upgraded), revision: result.revision + 1 };
+            tx.objectStore("state").put(result, "current");
+          }
         } catch (e) { error = e; }
       };
       tx.oncomplete = () => {
@@ -81,12 +86,19 @@ export function download(
   content: string,
   type = "application/json",
 ) {
-  const url = URL.createObjectURL(new Blob([content], { type }));
+  downloadBlob(name, new Blob([content], { type }));
+}
+export function downloadBlob(name: string, blob: Blob) {
+  const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
   a.download = name;
   document.body.appendChild(a);
   a.click();
   a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+export function downloadGif(name: string, dataUrl: string) {
+  const bytes = Uint8Array.from(atob(dataUrl.split(",")[1]), c => c.charCodeAt(0));
+  downloadBlob(name, new Blob([bytes], { type: "image/gif" }));
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { EXERCISE_CATALOG, CATALOG_VERSION } from "./exercise-catalog.ts";
 
 export const GROUPS = ["胸部", "肩部", "背部", "腿部", "手臂", "其他"] as const;
 const id = z.string().min(1).max(100);
@@ -17,7 +18,7 @@ const date = z
     (v) => !isNaN(Date.parse(v)) && dateKey(new Date(v + "T12:00:00")) === v,
     "日期无效",
   );
-export const exerciseSchema = z.object({ id, name, group: z.enum(GROUPS) });
+export const exerciseSchema = z.object({ id, name, group: z.enum(GROUPS), demoId: z.string().max(100).optional() });
 export const setSchema = z.object({
   weight: z.number().finite().min(0).max(1000),
   reps: z.number().int().min(1).max(200),
@@ -121,6 +122,7 @@ export const goalSchema = z
 export const stateSchema = z
   .object({
     version: z.literal(1),
+    catalogVersion: z.number().int().min(0).max(CATALOG_VERSION).optional(),
     exercises: z.array(exerciseSchema).min(1).max(500),
     workouts: z.array(workoutSchema).max(15000),
     body: z.array(bodySchema).max(15000),
@@ -161,48 +163,34 @@ export type Program = z.infer<typeof programSchema>;
 export type Goal = z.infer<typeof goalSchema>;
 export type State = z.infer<typeof stateSchema>;
 export type TrainingSet = z.infer<typeof setSchema>;
-const defaults: Record<string, string[]> = {
-  胸部: [
-    "平板杠铃卧推",
-    "上斜杠铃卧推",
-    "哑铃卧推",
-    "上斜哑铃卧推",
-    "双杠臂屈伸",
-    "绳索夹胸",
-  ],
-  肩部: [
-    "杠铃推肩",
-    "哑铃推肩",
-    "阿诺德推举",
-    "哑铃侧平举",
-    "绳索侧平举",
-    "反向飞鸟",
-  ],
-  背部: ["引体向上", "高位下拉", "杠铃划船", "坐姿划船", "单臂哑铃划船"],
-  腿部: [
-    "杠铃深蹲",
-    "腿举",
-    "罗马尼亚硬拉",
-    "腿屈伸",
-    "腿弯举",
-    "提踵",
-    "传统硬拉",
-  ],
-  手臂: ["杠铃弯举", "哑铃弯举", "锤式弯举", "绳索下压", "仰卧臂屈伸"],
-};
+export const builtinExercises = (): Exercise[] => EXERCISE_CATALOG.map(e => ({
+  id: e.id, name: e.name, group: e.group, demoId: e.id,
+}));
+/** Add only missing built-ins. Existing IDs, names, training and custom data are preserved. */
+export function mergeBuiltinExercises(state: State): State {
+  const exercises = state.exercises.map(ex => {
+    if (ex.demoId !== undefined) return ex;
+    const guide = EXERCISE_CATALOG.find(g => g.name === ex.name.trim() && g.group === ex.group);
+    return guide ? { ...ex, demoId: guide.id } : ex;
+  });
+  const ids = new Set(exercises.map(e => e.id));
+  const names = new Set(exercises.map(e => `${e.group}:${e.name.trim()}`));
+  for (const ex of builtinExercises()) {
+    if (exercises.length >= 500) break;
+    if (ids.has(ex.id) || names.has(`${ex.group}:${ex.name}`)) continue;
+    exercises.push(ex);
+    ids.add(ex.id);
+    names.add(`${ex.group}:${ex.name}`);
+  }
+  return { ...state, exercises, catalogVersion: CATALOG_VERSION };
+}
+export const upgradeCatalog = (state: State): State =>
+  state.catalogVersion === CATALOG_VERSION ? state : mergeBuiltinExercises(state);
 export const initialState = (): State => ({
   version: 1,
-  exercises: Object.entries(defaults).flatMap(([group, names], gi) =>
-    names.map((name, i) => ({
-      id: `exercise-${gi}-${i}`,
-      name,
-      group: group as Exercise["group"],
-    })),
-  ),
-  workouts: [],
-  body: [],
-  programs: [],
-  goals: [],
+  catalogVersion: CATALOG_VERSION,
+  exercises: builtinExercises(),
+  workouts: [], body: [], programs: [], goals: [],
   settings: { name: "训练者", weeklyTarget: 4 },
 });
 export const uid = () => crypto.randomUUID();

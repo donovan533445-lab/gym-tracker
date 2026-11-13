@@ -12,6 +12,7 @@ import {
 import { number, exerciseHistory, inDays } from "@/lib/model";
 import { useGym } from "./context";
 import { Card, Stat, SectionHead, Empty } from "./ui";
+import { ExerciseInlineGuide } from "./ExerciseDemo";
 import { TrendChart } from "./charts";
 const ranges = [
   [7, "7 天"],
@@ -78,6 +79,7 @@ export default function Analytics() {
           ))}
         </div>
       </div>
+      <ExerciseInlineGuide exercise={exercise}/>
       <div className="stats-grid">
         <Stat
           label="历史最大重量"

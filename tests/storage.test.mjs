@@ -41,3 +41,15 @@ test('corrupted stored state is surfaced without silently resetting it', async (
   await assert.rejects(r.load(), /校验失败/);
   await assert.rejects(r.save(initialState(), 0), /另一标签页/);
 });
+test('legacy catalog migration is atomic, persistent and never resets training data', async()=>{
+  const name=`test-${crypto.randomUUID()}`;
+  const r=new DataRepository(name);const old=initialState();delete old.catalogVersion;
+  old.exercises=old.exercises.filter(e=>/^exercise-\d-\d$/.test(e.id)).map(({demoId,...e})=>e);
+  old.settings.name='历史用户';old.workouts=[{id:'historical',date:'2026-01-01',name:'旧记录',note:'保留',entries:[{exerciseId:'exercise-0-0',sets:[{weight:50,reps:5,rpe:8}]}]}];
+  await r.save(old,0);
+  const results=await Promise.all([r.load(),new DataRepository(name).load()]);
+  for(const result of results){assert.equal(result.data.exercises.length,100);assert.equal(result.revision,2);assert.deepEqual(result.data.workouts,old.workouts);assert.equal(result.data.settings.name,'历史用户');}
+  const state=results[0];state.data.exercises=state.data.exercises.filter(e=>e.id!=='exercise-0-1');
+  await r.save(state.data,state.revision);
+  const loaded=await r.load();assert.equal(loaded.data.exercises.length,99);assert.equal(loaded.revision,3);
+});

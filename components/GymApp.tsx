@@ -79,7 +79,8 @@ export default function GymApp({
   useEffect(() => {
     load();
     const onHash = () => {
-      const id = location.hash.slice(1);
+      const hash = location.hash.slice(1);
+      const id = hash === "exercises" ? "workout" : hash;
       if (NAV.some((n) => n.id === id)) setPage(id as Page);
     };
     onHash();

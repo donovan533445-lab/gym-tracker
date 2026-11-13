@@ -33,3 +33,15 @@ npm run preview
 ## 校验
 
 模型测试覆盖容量、估算1RM、PR回算、5×5目标、备份关联校验、CSV安全转义和日期规则。存储测试覆盖持久化、并发冲突、非法数据和损坏记录保护。
+
+## 动作库 v2
+
+内置 100 个动作，每项有中文名称、器械、目标肌群、3 条动作要点和可播放/暂停/下载的分解示范 GIF。动作库支持中英文搜索、肌群及器械筛选；训练编辑器和力量分析中也可展开示范。
+
+视觉素材来自 `@bryllim/workout-guide@1.0.0`，作者 Bryl Lim，部分首姿态源于 Everkinetic，按 **CC BY-SA 4.0** 使用。本站将三个姿态依次组装为循环 GIF，并保留原始首帧作静态封面；这些是分解图示，不是真人视频或连续动作捕捉。完整逐帧来源、改动和许可证见 `public/exercise-media/ATTRIBUTION.json` 与 `LICENSE.txt`。衍生 GIF/封面继续按 CC BY-SA 4.0 提供。
+
+媒体直接随网站托管，不依赖外部图片服务器。每个 `public/exercise-media/*.json` 内封装实际 GIF/PNG 的 data URL，按可见区域加载封面，仅在用户打开示范后播放，减少手机端同时运行动画。
+
+重建素材（常规构建无需执行）：下载并解包 `npm pack @bryllim/workout-guide@1.0.0 --ignore-scripts`，安装 ffmpeg 与 Pillow，然后运行 `python scripts/generate-exercise-media.py /absolute/path/to/package`。`content/exercises.tsv` 是中文动作与来源的对应表。
+
+首次加载自动补充旧版缺失动作，并原子更新数据库版本；保留原 29 个动作 ID、用户改名、自定义动作、训练、计划、目标和身体记录。已升级后主动删除的动作不会在刷新时重新加入。恢复旧备份时也执行同样的增量升级。

@@ -12,6 +12,7 @@ import {
   sortedWorkouts,
 } from "@/lib/model";
 import { useGym } from "./context";
+import { ExerciseInlineGuide } from "./ExerciseDemo";
 import { Modal, Field, ErrorText } from "./ui";
 export default function WorkoutEditor({
   workout,
@@ -211,6 +212,7 @@ export default function WorkoutEditor({
                   <Trash2 size={16} />
                 </button>
               </div>
+              <ExerciseInlineGuide exercise={data.exercises.find(e => e.id === entry.exerciseId)!}/>
               <div className="set-head">
                 <span>组</span>
                 <span>重量 kg</span>

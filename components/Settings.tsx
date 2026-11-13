@@ -11,7 +11,7 @@ import {
   FileSpreadsheet,
   Save,
 } from "lucide-react";
-import { State, stateSchema, dateKey, trainingCSV, bodyCSV } from "@/lib/model";
+import { State, stateSchema, dateKey, trainingCSV, bodyCSV, upgradeCatalog } from "@/lib/model";
 import { download } from "@/lib/storage";
 import { useGym } from "./context";
 import { Card, Field, SectionHead, Modal, ErrorText } from "./ui";
@@ -44,7 +44,7 @@ export default function Settings() {
         throw new Error(
           `备份内容校验失败：${checked.error.issues[0]?.message}`,
         );
-      setRestore(checked.data);
+      setRestore(upgradeCatalog(checked.data));
     } catch (e) {
       setError(e instanceof Error ? e.message : "无法读取备份文件");
     }
