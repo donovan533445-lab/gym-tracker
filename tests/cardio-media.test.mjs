@@ -47,7 +47,7 @@ test('all 12 cardio GIFs encode 24 timed frames and preserve the two-second cycl
     assert.equal(delays.reduce((a, b) => a + b, 0), 2000, slug);
     assert.ok(gif.includes(Buffer.from('NETSCAPE2.0')), slug);
     assert.equal(media.animation.fps, 12);
-    assert.deepEqual(media.animation.poseFrames, [0, 6, 12]);
+    assert.deepEqual(media.animation.poseFrames, media.animation.transition === 'articulated-gait' ? [0, 6, 12, 18] : [0, 6, 12]);
     const preview = readFileSync(new URL(`../public/exercise-media/${slug}.poster.json`, import.meta.url), 'utf8');
     assert.ok(preview.length < JSON.stringify(media).length / 10, slug);
     const poster = JSON.parse(preview);

@@ -55,20 +55,21 @@ export function ExerciseGuideContent({ exercise }: { exercise: Exercise }) {
   const [playing, setPlaying] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [imageError, setImageError] = useState(false);
   useEffect(() => { setImageError(false); }, [media]);
+  const stepping = media?.animation?.transition === 'articulated-gait';
   if (!guide) return <div className="demo-unavailable"><Film size={28}/><p>这个自定义动作尚未关联示范。</p><small>在动作库编辑中选择对应的示范动作，避免用不匹配的图示代替。</small></div>;
   return <div className="exercise-guide">
     <div className="demo-meta"><span className="tag">{exercise.group}</span><span>{guide.equipment}</span><span>{guide.target}</span></div>
     <div className="demo-visual" aria-label={`${exercise.name}分解动作示范`}>
       {error || imageError ? <div className="demo-failure" role="status"><p>示范暂时无法加载</p><button type="button" className="button secondary" onClick={() => { setImageError(false); retry(); }}><RefreshCw size={15}/>重新加载</button></div>
-      : media ? <img key={playing ? 'gif' : 'poster'} src={playing ? media.gif : media.poster} alt={`${exercise.name}：三个关键姿态循环分解示范`} width={384} height={384} onError={() => setImageError(true)}/>
+      : media ? <img key={playing ? 'gif' : 'poster'} src={playing ? media.gif : media.poster} alt={stepping ? `${exercise.name}：左腿和右腿交替抬起、落脚的循环步态示意` : `${exercise.name}：三个关键姿态循环分解示范`} width={384} height={384} onError={() => setImageError(true)}/>
       : <span className="demo-loading" role="status">正在载入动作示范…</span>}
     </div>
     <div className="demo-controls"><button type="button" className="button secondary" disabled={!media || error || imageError} onClick={() => setPlaying(v => !v)}>{playing ? <Pause size={16}/> : <Play size={16}/>} {playing ? '暂停示范' : '播放示范'}</button>
       {media && <a className="text-link" href={media.gif} download={`${exercise.name}.gif`} onClick={e => { e.preventDefault(); downloadGif(`${exercise.name}.gif`, media.gif); }}><Download size={15}/>下载 GIF</a>}
     </div>
-    <p className="demo-caption">{media?.animation ? '分解动作示范 · 3 个原始姿态渐变 · 12 fps · 每轮 2 秒' : '分解动作示范 · 3 个关键姿态 · 循环播放'}</p>
+    <p className="demo-caption">{stepping ? '双腿交替迈步示意 · 12 fps · 每轮 2 秒' : media?.animation ? '分解动作示范 · 3 个原始姿态渐变 · 12 fps · 每轮 2 秒' : '分解动作示范 · 3 个关键姿态 · 循环播放'}</p>
     <h3>动作要点</h3><ol className="demo-steps">{guide.steps.map((step, i) => <li key={i}>{step}</li>)}</ol>
-    <div className="demo-credit">图示：Bryl Lim / Everkinetic · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a><a href={guide.sourceUrl} target="_blank" rel="noreferrer">查看原图来源 <ExternalLink size={11}/></a></div>
+    <div className="demo-credit">{stepping ? '步态图示：GYM TRACKER · ' : '图示：Bryl Lim / Everkinetic · '}<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a>{!stepping && <a href={guide.sourceUrl} target="_blank" rel="noreferrer">查看原图来源 <ExternalLink size={11}/></a>}</div>
   </div>;
 }
 

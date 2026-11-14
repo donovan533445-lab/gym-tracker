@@ -1,10 +1,10 @@
 export interface ExerciseMedia {
   version: number; gif: string; poster: string;
-  animation?: { fps: number; frameCount: number; durationMs: number; sourcePoseCount: number };
+  animation?: { fps: number; frameCount: number; durationMs: number; sourcePoseCount: number; transition?: 'crossfade' | 'articulated-gait' };
 }
 const cache = new Map<string, Promise<ExerciseMedia>>();
 const posters = new Map<string, Promise<string>>();
-const CARDIO_MEDIA_VERSION = 'cardio-12fps-v1';
+const CARDIO_MEDIA_VERSION = 'cardio-stepping-v2';
 /** Cardio thumbnails must not download the full animation just to show a poster. */
 export function loadExercisePoster(slug: string, cardio: boolean): Promise<string> {
   if (!cardio) return loadExerciseMedia(slug).then(media => media.poster);

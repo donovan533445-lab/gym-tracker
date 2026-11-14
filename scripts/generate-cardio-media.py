@@ -49,6 +49,9 @@ def original_poses(slug, old):
 for slug in IDS:
     path = MEDIA / f"{slug}.json"
     old = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    if old.get("animation", {}).get("transition") == "articulated-gait":
+        print(f"{slug}: keep articulated gait; rebuild with generate-stepping-media.mjs")
+        continue
     poses = original_poses(slug, old)
     # One shared palette prevents color flicker; no dithering on line art.
     palette = Image.new("P", (1, 1))
@@ -79,7 +82,8 @@ for slug in IDS:
 
 attribution_path = MEDIA / "CARDIO_ATTRIBUTION.json"
 attribution = json.loads(attribution_path.read_text(encoding="utf-8"))
-attribution["changes"] = "Three original key poses assembled as 384px dark-matte GIFs with smoothstep crossfade transitions, 1→2→3→2→1, 24 frames / 2 seconds (12 fps average). Transitions blend existing poses; they are not captured intermediate motion. A shared palette prevents color flicker. First pose retained as a separate dark-matte PNG preview payload. Chinese names and cues added."
+if not attribution.get("replacements"):
+    attribution["changes"] = "Three original key poses assembled as 384px dark-matte GIFs with smoothstep crossfade transitions, 1→2→3→2→1, 24 frames / 2 seconds (12 fps average). Transitions blend existing poses; they are not captured intermediate motion. A shared palette prevents color flicker. First pose retained as a separate dark-matte PNG preview payload. Chinese names and cues added."
 if MANIFEST:
     attribution["exercises"] = [MANIFEST[slug] for slug in IDS]
 attribution_path.write_text(json.dumps(attribution, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

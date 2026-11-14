@@ -26,7 +26,9 @@ npm run preview
 
 12 项有氧分解 GIF 使用与力量库相同的许可，来源和改动见 `public/exercise-media/CARDIO_ATTRIBUTION.json`；重建运行 `python scripts/generate-cardio-media.py /absolute/path/to/package`。
 
-有氧 GIF 使用 24 帧 / 2 秒（平均 12 fps），以三个原始姿态作渐变过渡，保持原来的训练示范节奏；过渡帧不是动作捕捉。列表只请求独立的 `.poster.json` 封面，打开示范才加载完整 GIF。无原始素材包时可运行 `python scripts/generate-cardio-media.py`，从已提交 GIF 的原始姿态重建，不会叠加过渡。手机弹窗随可视区域和键盘调整，标题及保存操作保留在可见区域。
+有氧 GIF 均使用 24 帧 / 2 秒（平均 12 fps）。除下述两项外，其余 10 项以三个原始姿态作渐变过渡，保持原来的训练示范节奏；过渡帧不是动作捕捉。列表只请求独立的 `.poster.json` 封面，打开示范才加载完整 GIF。无原始素材包时可运行 `python scripts/generate-cardio-media.py`，从已提交 GIF 的原始姿态重建，不会叠加过渡。手机弹窗随可视区域和键盘调整，标题及保存操作保留在可见区域。
+
+爬坡机与楼梯机使用独立的双腿交替步态图示，逐帧绘制髋、膝、踝位置，让左右腿交替支撑和抬脚；传送带或阶梯与落地脚同步运动，保持每轮 2 秒。两项图示为 GYM TRACKER 原创矢量示意，按 CC BY-SA 4.0 提供。重建需 Sharp 与 Pillow，运行 `node scripts/generate-stepping-media.mjs`；`GYM_SHARP_MODULE` 与 `GYM_PYTHON` 可指定本地工具。普通站点构建不需要这些素材制作工具。通用三姿态生成脚本会保留这两项新图示。
 
 ## 数据与隐私
 
