@@ -3,7 +3,7 @@ import { Play, Pause, Download, ExternalLink, RefreshCw, Dumbbell, Film } from '
 import { downloadGif } from '@/lib/storage';
 import type { Exercise } from '@/lib/model';
 import { guideById, type ExerciseGuide } from '@/lib/exercise-catalog';
-import { loadExerciseMedia, type ExerciseMedia } from '@/lib/exercise-media';
+import { loadExerciseMedia, loadExercisePoster, type ExerciseMedia } from '@/lib/exercise-media';
 import { Modal } from './ui';
 
 function useMedia(guide: ExerciseGuide | undefined, active: boolean) {
@@ -24,7 +24,16 @@ export function ExercisePreview({ exercise, onOpen }: { exercise: Exercise; onOp
   const guide = guideById(exercise.demoId);
   const ref = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
-  const { media } = useMedia(guide, visible);
+  const [poster, setPoster] = useState<string | null>(null);
+  useEffect(() => {
+    setPoster(null);
+    if (!guide || !visible) return;
+    let current = true;
+    loadExercisePoster(guide.slug, guide.id.startsWith('cardio-')).then(value => {
+      if (current) setPoster(value);
+    }).catch(() => {});
+    return () => { current = false; };
+  }, [guide, visible]);
   useEffect(() => {
     if (!ref.current || !guide) return;
     if (!('IntersectionObserver' in window)) { setVisible(true); return; }
@@ -35,7 +44,7 @@ export function ExercisePreview({ exercise, onOpen }: { exercise: Exercise; onOp
     return () => observer.disconnect();
   }, [guide]);
   return <button ref={ref} type="button" className={`exercise-preview ${guide ? '' : 'no-demo'}`} onClick={onOpen} aria-label={`查看${exercise.name}动作示范`}>
-    {media ? <img src={media.poster} alt="" loading="lazy" width={512} height={512}/> : <Dumbbell size={38} strokeWidth={1.25}/>}
+    {poster ? <img src={poster} alt="" loading="lazy" width={384} height={384}/> : <Dumbbell size={38} strokeWidth={1.25}/>}
     <span className="preview-play"><Play size={14} fill="currentColor"/>{guide ? 'GIF 示范' : '关联示范'}</span>
   </button>;
 }
@@ -57,7 +66,7 @@ export function ExerciseGuideContent({ exercise }: { exercise: Exercise }) {
     <div className="demo-controls"><button type="button" className="button secondary" disabled={!media || error || imageError} onClick={() => setPlaying(v => !v)}>{playing ? <Pause size={16}/> : <Play size={16}/>} {playing ? '暂停示范' : '播放示范'}</button>
       {media && <a className="text-link" href={media.gif} download={`${exercise.name}.gif`} onClick={e => { e.preventDefault(); downloadGif(`${exercise.name}.gif`, media.gif); }}><Download size={15}/>下载 GIF</a>}
     </div>
-    <p className="demo-caption">分解动作示范 · 3 个关键姿态 · 循环播放</p>
+    <p className="demo-caption">{media?.animation ? '分解动作示范 · 3 个原始姿态渐变 · 12 fps · 每轮 2 秒' : '分解动作示范 · 3 个关键姿态 · 循环播放'}</p>
     <h3>动作要点</h3><ol className="demo-steps">{guide.steps.map((step, i) => <li key={i}>{step}</li>)}</ol>
     <div className="demo-credit">图示：Bryl Lim / Everkinetic · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a><a href={guide.sourceUrl} target="_blank" rel="noreferrer">查看原图来源 <ExternalLink size={11}/></a></div>
   </div>;
@@ -72,3 +81,4 @@ export function ExerciseInlineGuide({ exercise }: { exercise: Exercise }) {
   if (!guideById(exercise.demoId)) return null;
   return <details className="exercise-inline-guide" onToggle={e => setOpen(e.currentTarget.open)}><summary><Film size={15}/>查看动作示范 GIF</summary>{open && <ExerciseGuideContent key={exercise.demoId} exercise={exercise}/>}</details>;
 }
+

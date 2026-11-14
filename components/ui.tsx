@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useId, useRef } from "react";
 import { ArrowUpRight, Dumbbell, X } from "lucide-react";
 export function Card({
   children,
@@ -63,6 +63,7 @@ export function Modal({
   wide?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   useEffect(() => {
     const previous = document.activeElement as HTMLElement;
     const scrollY = window.scrollY;
@@ -79,15 +80,33 @@ export function Modal({
     document.body.style.top = `-${scrollY}px`;
     document.body.style.width = "100%";
     const viewport = window.visualViewport;
-    const updateHeight = () =>
-      ref.current?.style.setProperty(
+    let frame = 0;
+    const updateHeight = () => {
+      const dialog = ref.current;
+      if (!dialog) return;
+      dialog.style.setProperty(
         "--dialog-available-height",
         `${viewport?.height ?? window.innerHeight}px`,
       );
+      dialog.style.setProperty("--dialog-viewport-top", `${viewport?.offsetTop ?? 0}px`);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const active = document.activeElement;
+        const body = dialog.querySelector<HTMLElement>(".modal-body");
+        if (!(active instanceof HTMLElement) || !body?.contains(active)) return;
+        const field = active.getBoundingClientRect();
+        const bounds = body.getBoundingClientRect();
+        if (field.bottom > bounds.bottom - 16) body.scrollTop += field.bottom - bounds.bottom + 16;
+        else if (field.top < bounds.top + 16) body.scrollTop -= bounds.top - field.top + 16;
+      });
+    };
     updateHeight();
     viewport?.addEventListener("resize", updateHeight);
+    viewport?.addEventListener("scroll", updateHeight);
     return () => {
       viewport?.removeEventListener("resize", updateHeight);
+      viewport?.removeEventListener("scroll", updateHeight);
+      cancelAnimationFrame(frame);
       Object.assign(document.body.style, original);
       window.scrollTo({ top: scrollY, behavior: "instant" });
       previous?.focus({ preventScroll: true });
@@ -97,6 +116,7 @@ export function Modal({
     <dialog
       className={`modal ${wide ? "wide" : ""}`}
       ref={ref}
+      aria-labelledby={titleId}
       onCancel={(e) => {
         e.preventDefault();
         onClose();
@@ -106,7 +126,7 @@ export function Modal({
       }}
     >
       <div className="modal-head">
-        <h2>{title}</h2>
+        <h2 id={titleId}>{title}</h2>
         <button
           type="button"
           className="icon-button"
@@ -221,3 +241,4 @@ export function Confirm({
     </Modal>
   );
 }
+

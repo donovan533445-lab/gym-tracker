@@ -1499,5 +1499,35 @@
 .mobile-layout .cardio-form-grid input { width:100%;min-width:0; }
 
 
+.mobile-layout .modal[open] {
+    position: fixed;
+    top: calc(var(--dialog-viewport-top, 0px) + max(8px, env(safe-area-inset-top, 0px)));
+    bottom: auto;
+    margin-block: 0;
+    max-height: calc(var(--dialog-available-height, 100dvh) - 16px - env(safe-area-inset-top, 0px));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+.mobile-layout .modal > form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+.mobile-layout .modal-head, .mobile-layout .modal-actions { flex-shrink: 0; }
+.mobile-layout .modal-body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-padding-block: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+.mobile-layout .demo-visual { max-height: min(384px, 48svh); }
+.mobile-layout .demo-controls { gap: 8px; }
+.mobile-layout .demo-controls > * { min-height: 44px; }
+.mobile-layout .demo-caption { font-size: 12px; }
+
+
 .mobile-layout .modal, .mobile-layout .modal.wide { width:min(464px, calc(100% - 16px)); }
 .mobile-layout .mobile-bottom-nav { width:min(480px, 100%); left:50%; right:auto; transform:translateX(-50%); }

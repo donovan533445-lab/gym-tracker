@@ -26,6 +26,8 @@ npm run preview
 
 12 项有氧分解 GIF 使用与力量库相同的许可，来源和改动见 `public/exercise-media/CARDIO_ATTRIBUTION.json`；重建运行 `python scripts/generate-cardio-media.py /absolute/path/to/package`。
 
+有氧 GIF 使用 24 帧 / 2 秒（平均 12 fps），以三个原始姿态作渐变过渡，保持原来的训练示范节奏；过渡帧不是动作捕捉。列表只请求独立的 `.poster.json` 封面，打开示范才加载完整 GIF。无原始素材包时可运行 `python scripts/generate-cardio-media.py`，从已提交 GIF 的原始姿态重建，不会叠加过渡。手机弹窗随可视区域和键盘调整，标题及保存操作保留在可见区域。
+
 ## 数据与隐私
 
 网站代码公开；训练数据不在仓库中。每位访问者的数据通过 IndexedDB 保存在自己的浏览器，不上传服务器，不同设备不自动同步。刷新或重开保留记录。请使用普通浏览模式并定期导出完整备份；清除网站数据、卸载浏览器或无痕模式可能丢失本机数据。旧版可先从设置导出完整备份，再在此站恢复。
@@ -51,3 +53,4 @@ npm run preview
 重建素材（常规构建无需执行）：下载并解包 `npm pack @bryllim/workout-guide@1.0.0 --ignore-scripts`，安装 ffmpeg 与 Pillow，然后运行 `python scripts/generate-exercise-media.py /absolute/path/to/package`。`content/exercises.tsv` 是中文动作与来源的对应表。
 
 首次加载自动补充旧版缺失动作，并原子更新数据库版本；保留原 29 个动作 ID、用户改名、自定义动作、训练、计划、目标和身体记录。已升级后主动删除的动作不会在刷新时重新加入。恢复旧备份时也执行同样的增量升级。
+

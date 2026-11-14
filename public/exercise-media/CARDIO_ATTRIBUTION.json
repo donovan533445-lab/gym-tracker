@@ -6,7 +6,7 @@
   ],
   "license": "CC BY-SA 4.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-  "changes": "Frames assembled as 384px dark-matte GIFs, 1→2→3→2 at 2fps; first pose retained as PNG poster. Chinese names and cues added. Incline-walk illustration shows an incline treadmill.",
+  "changes": "Three original key poses assembled as 384px dark-matte GIFs with smoothstep crossfade transitions, 1→2→3→2→1, 24 frames / 2 seconds (12 fps average). Transitions blend existing poses; they are not captured intermediate motion. A shared palette prevents color flicker. First pose retained as a separate dark-matte PNG preview payload. Chinese names and cues added.",
   "exercises": [
     {
       "id": "exercise-treadmill-incline-walk",

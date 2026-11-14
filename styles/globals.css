@@ -3926,3 +3926,37 @@ html {
  .cardio-record .workout-card-actions { flex-wrap:wrap;gap:16px; }.cardio-record .workout-card-actions button { min-height:44px; }
  .cardio-form-grid { gap:10px; }.cardio-form-grid input { width:100%;min-width:0; }
 }
+
+/* Keep the header and actions visible while the phone keyboard reduces the viewport. */
+@media (max-width: 767px) {
+  .modal[open] {
+    position: fixed;
+    top: calc(var(--dialog-viewport-top, 0px) + max(8px, env(safe-area-inset-top, 0px)));
+    bottom: auto;
+    margin-block: 0;
+    max-height: calc(var(--dialog-available-height, 100dvh) - 16px - env(safe-area-inset-top, 0px));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal > form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .modal-head,
+  .modal-actions { flex-shrink: 0; }
+  .modal-body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-padding-block: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .demo-visual { max-height: min(384px, 48svh); }
+  .demo-controls { gap: 8px; }
+  .demo-controls > * { min-height: 44px; }
+  .demo-caption { font-size: 12px; }
+}
+
