@@ -80,7 +80,7 @@ export default function GymApp({
     load();
     const onHash = () => {
       const hash = location.hash.slice(1);
-      const id = hash === "exercises" ? "workout" : hash;
+      const id = ["exercises", "cardio", "cardio-exercises"].includes(hash) ? "workout" : hash;
       if (NAV.some((n) => n.id === id)) setPage(id as Page);
     };
     onHash();

@@ -1,0 +1,728 @@
+{
+  "sourcePackage": "@bryllim/workout-guide@1.0.0",
+  "creators": [
+    "Bryl Lim",
+    "Everkinetic"
+  ],
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "changes": "Frames assembled as 384px dark-matte GIFs, 1→2→3→2 at 2fps; first pose retained as PNG poster. Chinese names and cues added. Incline-walk illustration shows an incline treadmill.",
+  "exercises": [
+    {
+      "id": "exercise-treadmill-incline-walk",
+      "slug": "treadmill-incline-walk",
+      "name": "Treadmill Incline Walk",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Glutes",
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/treadmill-incline-walk/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/treadmill-incline-walk/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/treadmill-incline-walk/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-stair-climber",
+      "slug": "stair-climber",
+      "name": "Stair Climber",
+      "exerciseType": "duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/stair-climber/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/stair-climber/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/stair-climber/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-running",
+      "slug": "running",
+      "name": "Running",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/running/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/running/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/running/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-walking",
+      "slug": "walking",
+      "name": "Walking",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/walking/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/walking/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/walking/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-cycling",
+      "slug": "cycling",
+      "name": "Cycling",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/cycling/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/cycling/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/cycling/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-elliptical",
+      "slug": "elliptical",
+      "name": "Elliptical",
+      "exerciseType": "duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/elliptical/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/elliptical/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/elliptical/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-rowing",
+      "slug": "rowing",
+      "name": "Rowing",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Back",
+      "secondaryMuscles": [
+        "Legs",
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/rowing/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/rowing/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/rowing/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-jump-rope",
+      "slug": "jump-rope",
+      "name": "Jump Rope",
+      "exerciseType": "duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Calves",
+      "secondaryMuscles": [
+        "Cardio",
+        "Shoulders"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/jump-rope/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/jump-rope/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/jump-rope/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-assault-bike",
+      "slug": "assault-bike",
+      "name": "Assault Bike",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Cardio",
+        "Shoulders"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/assault-bike/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/assault-bike/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/assault-bike/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-skierg",
+      "slug": "skierg",
+      "name": "SkiErg",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Back",
+      "secondaryMuscles": [
+        "Triceps",
+        "Core",
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/skierg/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/skierg/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/skierg/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-swimming",
+      "slug": "swimming",
+      "name": "Swimming",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Back",
+      "secondaryMuscles": [
+        "Shoulders",
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/swimming/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/swimming/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/swimming/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    },
+    {
+      "id": "exercise-hiking",
+      "slug": "hiking",
+      "name": "Hiking",
+      "exerciseType": "distance_duration",
+      "equipment": "Cardio",
+      "primaryMuscle": "Legs",
+      "secondaryMuscles": [
+        "Glutes",
+        "Cardio"
+      ],
+      "isStretch": false,
+      "frames": [
+        {
+          "index": 1,
+          "path": "assets/hiking/frame-1.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 2,
+          "path": "assets/hiking/frame-2.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        },
+        {
+          "index": 3,
+          "path": "assets/hiking/frame-3.png",
+          "width": 512,
+          "height": 512,
+          "format": "png",
+          "attribution": {
+            "creator": "Bryl Lim",
+            "creatorUrl": "https://bryllim.com",
+            "license": "CC BY-SA 4.0",
+            "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+          }
+        }
+      ],
+      "attribution": {
+        "creator": "Bryl Lim",
+        "creatorUrl": "https://bryllim.com",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    }
+  ]
+}

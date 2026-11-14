@@ -11,7 +11,7 @@ import {
   FileSpreadsheet,
   Save,
 } from "lucide-react";
-import { State, stateSchema, dateKey, trainingCSV, bodyCSV, upgradeCatalog } from "@/lib/model";
+import { State, stateSchema, dateKey, trainingCSV, bodyCSV, cardioCSV, upgradeCatalog } from "@/lib/model";
 import { download } from "@/lib/storage";
 import { useGym } from "./context";
 import { Card, Field, SectionHead, Modal, ErrorText } from "./ui";
@@ -151,7 +151,7 @@ export default function Settings() {
               <strong>{data.workouts.length} 条</strong>
             </div>
             <div className="setting-fixed">
-              <span>身体记录</span>
+              <span>有氧记录</span><strong>{data.cardio.length} 条</strong></div><div className="setting-fixed"><span>身体记录</span>
               <strong>{data.body.length} 条</strong>
             </div>
             <div className="setting-fixed">
@@ -188,6 +188,7 @@ export default function Settings() {
                 <Download size={14} />
                 训练数据
               </button>
+              <button className="button secondary" onClick={()=>{download(`gym-cardio-${dateKey()}.csv`,cardioCSV(data),"text/csv;charset=utf-8");notify("有氧 CSV 已导出");}}><Download size={14}/>有氧数据</button>
               <button
                 className="button secondary"
                 onClick={() => {
@@ -209,7 +210,7 @@ export default function Settings() {
               <HardDrive size={23} />
             </span>
             <h3>完整数据备份</h3>
-            <p>将训练、身体数据、动作库、计划、目标和偏好完整保存为 JSON。</p>
+            <p>将力量、有氧、身体数据、动作库、计划、目标和偏好完整保存为 JSON。</p>
             <button
               className="button secondary"
               onClick={() => {
@@ -258,7 +259,7 @@ export default function Settings() {
             </p>
             <div className="restore-summary">
               <span>{restore.workouts.length} 条训练记录</span>
-              <span>{restore.body.length} 条身体记录</span>
+              <span>{restore.body.length} 条身体记录</span><span>{restore.cardio.length} 条有氧记录</span>
               <span>{restore.exercises.length} 个训练动作</span>
               <span>{restore.programs.length} 个训练计划</span>
               <span>{restore.goals.length} 个训练目标</span>

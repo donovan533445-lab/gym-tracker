@@ -1,3 +1,4 @@
+import { CARDIO_GUIDES } from "./cardio-catalog.ts";
 // Catalog v2. Original IDs are intentionally stable for existing training history.
 export interface ExerciseGuide {
  id: string; name: string; group: "胸部" | "肩部" | "背部" | "腿部" | "手臂" | "其他";
@@ -1507,4 +1508,4 @@ export const EXERCISE_CATALOG: ExerciseGuide[] = [
     "sourceUrl": "https://bryllim.github.io/workout-guide/exercises/bird-dog/"
   }
 ];
-export const guideById = (id?: string) => EXERCISE_CATALOG.find(e => e.id === id);
+export const guideById = (id?: string) => [...EXERCISE_CATALOG, ...CARDIO_GUIDES].find(e => e.id === id);

@@ -24,15 +24,18 @@ import {
   mergeBuiltinExercises,
 } from "@/lib/model";
 import { EXERCISE_CATALOG, guideById } from "@/lib/exercise-catalog";
+import { CardioRecords, CardioLibrary } from "./Cardio";
 import { ExercisePreview, ExerciseDemoModal } from "./ExerciseDemo";
 import { useGym } from "./context";
 import { Card, Empty, Modal, Field, ErrorText, SectionHead } from "./ui";
 export default function Workouts() {
   const { data, openWorkout, remove, commit, navigate } = useGym();
-  const [tab, setTab] = useState(location.hash === "#exercises" ? "exercises" : "history");
+  const [tab, setTab] = useState(location.hash === "#cardio" ? "cardio" : location.hash === "#cardio-exercises" ? "cardio-exercises" : location.hash === "#exercises" ? "exercises" : "history");
   useEffect(() => {
     const update = () => {
       if (location.hash === "#exercises") setTab("exercises");
+      if (location.hash === "#cardio") setTab("cardio");
+      if (location.hash === "#cardio-exercises") setTab("cardio-exercises");
       if (location.hash === "#workout") setTab("history");
     };
     window.addEventListener("hashchange", update);
@@ -60,11 +63,11 @@ export default function Workouts() {
       <div className="page-intro">
         <div>
           <h1>训练记录</h1>
-          <p>认真记录每一组，见证每一次进步。</p>
+          <p>记录力量与有氧，见证每一次进步。</p>
         </div>
         <button className="button primary" onClick={() => openWorkout()}>
           <Plus size={17} />
-          记录训练
+          记录力量训练
         </button>
       </div>
       <div className="page-tabs">
@@ -80,8 +83,10 @@ export default function Workouts() {
         >
           动作库 <span>{data.exercises.length}</span>
         </button>
+        <button className={tab === "cardio" ? "active" : ""} onClick={()=>{setTab("cardio");location.hash="cardio";}}>有氧记录 <span>{data.cardio.length}</span></button>
+        <button className={tab === "cardio-exercises" ? "active" : ""} onClick={()=>{setTab("cardio-exercises");location.hash="cardio-exercises";}}>有氧动作 <span>12</span></button>
       </div>
-      {tab === "exercises" ? (
+      {tab === "cardio" ? <CardioRecords/> : tab === "cardio-exercises" ? <CardioLibrary/> : tab === "exercises" ? (
         <ExerciseLibrary />
       ) : (
         <>

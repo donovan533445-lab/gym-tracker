@@ -28,6 +28,7 @@ import {
 import { useGym } from "./context";
 import { Card, Stat, SectionHead, TextLink, Empty } from "./ui";
 import { TrendChart, VolumeChart, MuscleChart } from "./charts";
+import { CardioSummary } from "./Cardio";
 import Goals from "./Goals";
 export default function Dashboard() {
   const { data, openWorkout, navigate } = useGym();
@@ -100,7 +101,7 @@ export default function Dashboard() {
       </div>
       <div className="stats-grid">
         <Stat
-          label="本周训练"
+          label="本周力量训练"
           value={weekly.length}
           unit="次"
           detail={
@@ -135,7 +136,7 @@ export default function Dashboard() {
           icon={<Scale size={18} />}
         />
         <Stat
-          label="累计训练"
+          label="累计力量训练"
           value={number(data.workouts.length)}
           unit="次"
           detail={
@@ -147,6 +148,7 @@ export default function Dashboard() {
           icon={<Flame size={18} />}
         />
       </div>
+      <CardioSummary/>
       <div className="dashboard-main-grid">
         <Card className="strength-card">
           <SectionHead

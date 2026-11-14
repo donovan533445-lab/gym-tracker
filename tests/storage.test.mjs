@@ -53,3 +53,7 @@ test('legacy catalog migration is atomic, persistent and never resets training d
   await r.save(state.data,state.revision);
   const loaded=await r.load();assert.equal(loaded.data.exercises.length,99);assert.equal(loaded.revision,3);
 });
+test('cardio edits and deletion survive reopening without changing strength records',async()=>{
+ const r=repo(),s=initialState();s.cardio=[{id:'cardio',date:'2026-01-01',activity:'stair-climber',minutes:20,calories:null,calorieSource:'器械显示',distance:null,speed:null,incline:null,level:5,heartRate:null,note:''}];
+ let rev=await r.save(s,0);let loaded=await r.load();assert.equal(loaded.data.cardio[0].minutes,20);loaded.data.cardio[0].minutes=35;rev=await r.save(loaded.data,rev);loaded=await r.load();assert.equal(loaded.data.cardio[0].minutes,35);assert.deepEqual(loaded.data.workouts,s.workouts);await r.save({...loaded.data,cardio:[]},rev);assert.equal((await r.load()).data.cardio.length,0);
+});

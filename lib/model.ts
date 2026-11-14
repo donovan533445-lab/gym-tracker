@@ -1,3 +1,4 @@
+import { CARDIO_TYPES, cardioActivity } from "./cardio-catalog.ts";
 import { z } from "zod";
 import { EXERCISE_CATALOG, CATALOG_VERSION } from "./exercise-catalog.ts";
 
@@ -45,6 +46,16 @@ export const workoutSchema = z
   );
 const optionalMetric = (min: number, max: number) =>
   z.number().finite().min(min).max(max).nullable();
+export const cardioSchema = z.object({
+  id, date, activity: z.enum(CARDIO_TYPES),
+  minutes: z.number().finite().positive("时长必须大于0").max(1440),
+  calories: optionalMetric(0, 20000),
+  calorieSource: z.enum(["器械显示", "手表 / 手环", "手动填写"]),
+  distance: optionalMetric(0,1000), speed: optionalMetric(0,100),
+  incline: optionalMetric(-20,100), level: z.number().int().min(0).max(100).nullable(),
+  heartRate: z.number().int().min(30).max(250).nullable(), note: z.string().max(2000),
+}).refine(c=>c.date<=dateKey(),"训练日期不能晚于今天");
+export type CardioSession = z.infer<typeof cardioSchema>;
 export const bodySchema = z
   .object({
     id,
@@ -125,6 +136,7 @@ export const stateSchema = z
     catalogVersion: z.number().int().min(0).max(CATALOG_VERSION).optional(),
     exercises: z.array(exerciseSchema).min(1).max(500),
     workouts: z.array(workoutSchema).max(15000),
+    cardio: z.array(cardioSchema).max(15000).default([]),
     body: z.array(bodySchema).max(15000),
     programs: z.array(programSchema).max(100),
     goals: z.array(goalSchema).max(100),
@@ -138,6 +150,7 @@ export const stateSchema = z
     for (const [key, items] of Object.entries({
       exercises: s.exercises,
       workouts: s.workouts,
+      cardio: s.cardio,
       body: s.body,
       programs: s.programs,
       goals: s.goals,
@@ -190,7 +203,7 @@ export const initialState = (): State => ({
   version: 1,
   catalogVersion: CATALOG_VERSION,
   exercises: builtinExercises(),
-  workouts: [], body: [], programs: [], goals: [],
+  workouts: [], cardio: [], body: [], programs: [], goals: [],
   settings: { name: "训练者", weeklyTarget: 4 },
 });
 export const uid = () => crypto.randomUUID();
@@ -355,4 +368,16 @@ export function bodyCSV(s: State) {
       .map((b) => [b.date, ...keys.map((k) => b[k])]),
   ];
   return "\ufeff" + rows.map((r) => r.map(csvCell).join(",")).join("\r\n");
+}
+
+export function cardioTotals(sessions: CardioSession[]) {
+  const known = sessions.filter(c=>c.calories !== null);
+  return { sessions:sessions.length, minutes:sessions.reduce((n,c)=>n+c.minutes,0),
+    calories:known.length ? known.reduce((n,c)=>n+c.calories!,0) : null,
+    missingCalories:sessions.length-known.length };
+}
+export function cardioCSV(s: State) {
+  const rows: unknown[][] = [["日期","有氧项目","时长(分钟)","热量(kcal)","热量来源","距离(km)","速度(km/h)","坡度(%)","档位","平均心率(bpm)","备注"]];
+  for(const c of [...s.cardio].sort((a,b)=>b.date.localeCompare(a.date))) rows.push([c.date,cardioActivity(c.activity).name,c.minutes,c.calories,c.calorieSource,c.distance,c.speed,c.incline,c.level,c.heartRate,c.note]);
+  return "\ufeff" + rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
 }

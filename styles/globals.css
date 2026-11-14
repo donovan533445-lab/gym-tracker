@@ -3905,3 +3905,24 @@ html {
 @media (max-width: 340px) {
   .exercise-library { grid-template-columns:1fr; }
 }
+.cardio-dashboard { margin-bottom:24px; }
+.cardio-summary-values { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px; }
+.cardio-summary-values>div { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
+.cardio-summary-values svg { color:var(--accent); }.cardio-summary-values strong { font-size:29px; }.cardio-summary-values span { color:var(--muted);font-size:12px; }
+.cardio-intro { display:flex;justify-content:space-between;gap:16px;align-items:center;margin:22px 0; }.cardio-intro h2 { margin:0;font-size:20px; }.cardio-intro p { color:var(--muted);font-size:12px; }
+.cardio-stats { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:22px; }
+.cardio-filters { flex-wrap:wrap; }.cardio-filters select { max-width:100%; }
+.cardio-record-head { display:flex;justify-content:space-between;gap:18px; }.cardio-record-head h3 { margin:10px 0 4px; }.cardio-record-head p { color:var(--muted);font-size:12px; }.cardio-record-head>div:last-child { display:flex;flex-direction:column;align-items:flex-end;gap:6px; }.cardio-record-head strong { font-size:26px;white-space:nowrap; }.cardio-record-head strong small { font-size:12px;color:var(--muted); }.cardio-record-head>div:last-child>span { font-size:12px;color:var(--muted); }
+.cardio-chips { display:flex;gap:8px;flex-wrap:wrap;margin:12px 0; }.cardio-chips span { padding:4px 9px;background:#252b26;color:#b9c8ad;border-radius:5px;font-size:12px; }
+.cardio-form-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px; }.cardio-form-grid .field { min-width:0; }
+.cardio-library-record { min-height:44px; }
+.page-tabs { overflow-x:auto; }.page-tabs button { white-space:nowrap;flex-shrink:0; }
+@media (max-width: 767px) {
+ .cardio-stats { grid-template-columns:1fr;gap:12px; }.cardio-stats .stat { min-height:130px; }
+ .cardio-summary-values { gap:10px; }.cardio-summary-values>div { gap:6px; }.cardio-summary-values strong { font-size:24px; }.cardio-summary-values span { width:100%;font-size:11px; }
+ .cardio-intro { align-items:flex-start;flex-direction:column; }.cardio-intro .button { width:100%;justify-content:center; }
+ .cardio-filters>* { width:100%; }.cardio-filters select { min-width:0; }
+ .cardio-record-head { flex-direction:column;gap:8px; }.cardio-record-head>div:last-child { align-items:flex-start; }
+ .cardio-record .workout-card-actions { flex-wrap:wrap;gap:16px; }.cardio-record .workout-card-actions button { min-height:44px; }
+ .cardio-form-grid { gap:10px; }.cardio-form-grid input { width:100%;min-width:0; }
+}
